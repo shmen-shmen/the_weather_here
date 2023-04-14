@@ -1,0 +1,4 @@
+#IMAGE FILES
+/public/snapshots/*.png
+#DATABASE
+database.db

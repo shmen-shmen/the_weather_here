@@ -1,0 +1,30 @@
+body {
+	width: 100%;
+	min-width: 400px;
+	max-width: 900px;
+	margin: 0 auto;
+}
+
+#header {
+	padding: 1rem;
+	padding-right: 0;
+	background-color: rgb(135, 255, 215);
+}
+
+h1,
+h2,
+h3 {
+	margin: 0;
+}
+
+#navbar {
+	background-color: white;
+	padding: 0.25rem;
+}
+
+#main {
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+	background-color: cornflowerblue;
+}

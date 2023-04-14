@@ -1,6 +1,5 @@
 const latitudeEl = document.getElementById("lat");
 const longitudeEl = document.getElementById("lon");
-const submitBtnEl = document.getElementById("submit_btn");
 
 if ("geolocation" in navigator) {
 	console.log("GEOLOCATION IS AVAILABLE");
@@ -37,6 +36,11 @@ if ("geolocation" in navigator) {
 
 		const windEl = document.getElementById("wind");
 		windEl.innerText = weather_data["wind"]["speed"];
+
+		const waitEl = document.getElementById("wait");
+		waitEl.style.display = "none";
+		const weatherWrapperEl = document.getElementById("weather-wrapper");
+		weatherWrapperEl.style.display = "block";
 
 		const data = { myLat, myLon };
 		const options = {

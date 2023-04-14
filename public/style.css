@@ -25,27 +25,9 @@ h1 {
 	flex-direction: column;
 	padding: 1rem;
 	background-color: cornflowerblue;
+	min-height: 100px;
 }
 
-#video-container {
-	width: fit-content;
-	padding: 1rem 0 1rem 0;
-}
-
-.name_input_wrapper {
-	width: 300px;
-	display: flex;
-	flex-direction: column;
-}
-
-.name_input_and_button {
-	display: flex;
-	flex-direction: row;
-}
-.name_input_and_button > * {
-	flex-grow: 1;
-}
-
-#submit_btn {
-	width: fit-content;
+#weather-wrapper {
+	display: none;
 }

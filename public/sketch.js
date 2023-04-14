@@ -5,14 +5,20 @@ const submitBtnEl = document.getElementById("submit_btn");
 if ("geolocation" in navigator) {
 	console.log("GEOLOCATION IS AVAILABLE");
 
-	navigator.geolocation.getCurrentPosition((position) => {
+	navigator.geolocation.getCurrentPosition(async (position) => {
 		const myLat = position.coords.latitude;
 		latitudeEl.innerText = myLat;
-		const myLong = position.coords.longitude;
-		longitudeEl.innerText = myLong;
+		const myLon = position.coords.longitude;
+		longitudeEl.innerText = myLon;
+
+		// const apiURL = `https://api.openweathermap.org/data/2.5/weather?&APPID=e3c6d6402fdee997700bb9af2763d551&lat=${myLat.toString()}&lon=${myLon.toString()}`;
+		const apiURL = `/weather/${myLat}-${myLon}`;
+		const weather_response = await fetch(apiURL);
+		const weather_JSON = await weather_response.json();
+		console.log(weather_JSON);
 
 		const dataExchangeSequence = async () => {
-			const data = { myLat, myLong };
+			const data = { myLat, myLon };
 
 			//  hey, I want:
 			//  1 this data to be sent as JSON

@@ -2,3 +2,5 @@
 /public/snapshots/*.png
 #DATABASE
 database.db
+#WEATHER API KEY
+/weather_API_key.js

@@ -1,6 +1,7 @@
-const express = require("express");
-const fs = require("fs");
-const Datastore = require("@seald-io/nedb");
+import express from "express";
+import fs from "fs";
+import Datastore from "@seald-io/nedb";
+import weather_API_key from "./weather_API_key.js";
 
 const app = express();
 //listen at a port
@@ -23,15 +24,16 @@ app.get("/api", (request, response) => {
 			response.end;
 			return;
 		} else {
-			data = await database.findAsync({}).sort({ timestamp: 1 });
+			data = await database.findAsync({}).sort({ timestamp: -1 });
 			response.json(data);
 		}
 	});
 });
 
 //adding data generated from client to db
+let data;
 app.post("/api", async (request, response) => {
-	const data = request.body;
+	data = request.body;
 
 	data.timestamp = Date.now();
 
@@ -60,4 +62,12 @@ app.post("/api", async (request, response) => {
 		status: "success",
 		...data,
 	});
+});
+
+app.get("/weather/:lat-:lon", async (request, response) => {
+	const { lat, lon } = request.params;
+	const apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${weather_API_key}`;
+	const weather_response = await fetch(apiURL);
+	const weather_JSON = await weather_response.json();
+	response.json(weather_JSON);
 });

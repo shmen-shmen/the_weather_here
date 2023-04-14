@@ -7,37 +7,47 @@ if ("geolocation" in navigator) {
 
 	navigator.geolocation.getCurrentPosition(async (position) => {
 		const myLat = position.coords.latitude;
-		latitudeEl.innerText = myLat;
 		const myLon = position.coords.longitude;
-		longitudeEl.innerText = myLon;
 
-		// const apiURL = `https://api.openweathermap.org/data/2.5/weather?&APPID=e3c6d6402fdee997700bb9af2763d551&lat=${myLat.toString()}&lon=${myLon.toString()}`;
 		const apiURL = `/weather/${myLat}-${myLon}`;
 		const weather_response = await fetch(apiURL);
-		const weather_JSON = await weather_response.json();
-		console.log(weather_JSON);
+		const weather_data = await weather_response.json();
 
-		const dataExchangeSequence = async () => {
-			const data = { myLat, myLon };
+		const cityEl = document.getElementById("city");
+		cityEl.innerText = weather_data["name"];
 
-			//  hey, I want:
-			//  1 this data to be sent as JSON
-			//  2 I tell you this is JSON
-			//  2 I want to post it to '/api'
-			const options = {
-				method: "POST",
-				body: JSON.stringify(data),
-				headers: { "Content-Type": "application/json" },
-			};
-			//OMG here i make a request to a server and then i log response
-			//So this is what it means
-			const response = await fetch("/api", options);
-			console.log("COORDINATES SENT TO SERVER, AWAIT RESPONSE");
-			const newData = await response.json();
-			console.log("RESPONSE FROM SERVER: ", newData);
+		const timeEL = document.getElementById("time");
+		const time = Date.now();
+		const time_format_options = { timeZoneName: "short" };
+		timeEL.innerText = new Date(time).toLocaleString(
+			"kk-KZ",
+			time_format_options
+		);
+
+		const weatherEl = document.getElementById("weather");
+		weatherEl.innerText = weather_data["weather"][0]["description"];
+
+		const tempEl = document.getElementById("temp");
+		tempEl.innerText = Math.floor(weather_data["main"]["temp"] - 273.15);
+
+		const feelsLikeEl = document.getElementById("feels-like");
+		feelsLikeEl.innerText = Math.floor(
+			weather_data["main"]["feels_like"] - 273.15
+		);
+
+		const windEl = document.getElementById("wind");
+		windEl.innerText = weather_data["wind"]["speed"];
+
+		const data = { myLat, myLon };
+		const options = {
+			method: "POST",
+			body: JSON.stringify(data),
+			headers: { "Content-Type": "application/json" },
 		};
-
-		submitBtnEl.addEventListener("click", dataExchangeSequence);
+		const response = await fetch("/api", options);
+		console.log("COORDINATES SENT TO SERVER, AWAIT RESPONSE");
+		const newData = await response.json();
+		console.log("RESPONSE FROM SERVER: ", newData);
 	});
 } else {
 	console.log("ERROR GEOLOCATION IS NOT AVAILABLE");

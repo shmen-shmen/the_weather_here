@@ -6,8 +6,10 @@ dotenv.config();
 
 const app = express();
 //listen at a port
-app.listen(3000, () => {
-	console.log("listening at 3000");
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+	console.log(`listening at ${port}`);
 });
 //serving up files from 'public' folder
 app.use(express.static("public"));
@@ -46,7 +48,6 @@ app.post("/api", async (request, response) => {
 });
 
 //making weather request with client coordinates and sending result back to client
-
 app.get("/weather/:lat-:lon", async (request, response) => {
 	const { lat, lon } = request.params;
 	const weatherApiKey = process.env.WEATHER_API_KEY;

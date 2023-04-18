@@ -8,6 +8,13 @@
 
   <link rel="stylesheet" href="logs.css">
 
+  <!-- LEAFLET.JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+  <!-- LEAFLET.JS -->
+
   <title>POSITION LOGS</title>
 </head>
 
@@ -15,10 +22,11 @@
   <header id="header">
     <h1>Position logs:</h1>
     <nav id="navbar">
-      <a href="../index.html">back to index</a>
+      <a href="../index.html">back to weather</a>
     </nav>
   </header>
   <main id="main">
+    <div id="map"></div>
     <ul id="positions_list"></ul>
   </main>
   <script src="./logs.js"></script>

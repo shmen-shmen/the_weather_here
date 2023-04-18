@@ -24,7 +24,7 @@ app.get("/api", (request, response) => {
 			response.end;
 			return;
 		} else {
-			data = await database.findAsync({}).sort({ timestamp: -1 });
+			data = await database.findAsync({}).sort({ time: -1 });
 			response.json(data);
 		}
 	});
@@ -35,8 +35,6 @@ let data;
 app.post("/api", async (request, response) => {
 	data = request.body;
 
-	data.timestamp = Date.now();
-
 	database.insert(data);
 	//RESPONSE
 	//you are required to make a response, for example:
@@ -46,11 +44,11 @@ app.post("/api", async (request, response) => {
 	});
 });
 
+//making weather request with client coordinates and sending result back to client
 app.get("/weather/:lat-:lon", async (request, response) => {
 	const { lat, lon } = request.params;
-	const apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${weather_API_key}`;
+	const apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${weather_API_key}&units=metric`;
 	const weather_response = await fetch(apiURL);
 	const weather_JSON = await weather_response.json();
-	console.log(weather_JSON);
 	response.json(weather_JSON);
 });

@@ -22,7 +22,7 @@
   <header id="header">
     <h1>The weather here</h1>
     <nav id="navbar">
-      <a href="logs/index.html">go to logs</a>
+      <a href="index.html">weather</a> | <a href="logs/index.html">logs</a>
     </nav>
   </header>
   <main id="main">
@@ -31,9 +31,8 @@
         <h2>Please wait a second while the weather is loading...</h2>
       </div>
       <div id="ready">
-        <h2>Weather in <span id="city"></span> at <span id="time"></span>:</h2>
-        <p>Right now it is <span id="temp"></span>℃ which feels like: <span id="feels-like"></span>℃ outside, with <span
-            id="weather"></span>. The wind is <span id="wind"></span> m/sec.</p>
+        <h2>Weather in <span id="where-when"></h2>
+        <p id="report"></p>
         <button id="save-log">SAVE WEATHER LOG</button>
       </div>
     </section>

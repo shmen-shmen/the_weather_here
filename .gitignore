@@ -5,4 +5,4 @@ database.db
 #WEATHER API KEY
 /weather_API_key.js
 #DS_Store, whatever that is
-DS_Store
+.DS_Store

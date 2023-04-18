@@ -1,6 +1,12 @@
 const latitudeEl = document.getElementById("lat");
 const longitudeEl = document.getElementById("lon");
 const waitEl = document.getElementById("wait");
+const map = L.map("map");
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+	maxZoom: 19,
+	attribution:
+		'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+}).addTo(map);
 
 if ("geolocation" in navigator) {
 	console.log("GEOLOCATION IS AVAILABLE");
@@ -9,44 +15,42 @@ if ("geolocation" in navigator) {
 		// FIRST WE GET CLIENT COORDINATES
 		const myLat = position.coords.latitude;
 		const myLon = position.coords.longitude;
+		// LOAD MAP WITH COORDINATES
+		map.setView([myLat, myLon], 15);
+		let marker = L.marker([myLat, myLon]).addTo(map);
 
-		// SEND COORDS TO SERVER TO MAKE API CALL
-		const apiURL = `/weather/${myLat}-${myLon}`;
-		const weather_response = await fetch(apiURL);
-		// GET WEATHER DATA
-		const weather_data = await weather_response.json();
+		try {
+			// SEND COORDS TO SERVER TO MAKE API CALL
+			const apiURL = `/weather/${myLat}-${myLon}`;
+			const weather_response = await fetch(apiURL);
+			// GET WEATHER DATA
+			const weather_data = await weather_response.json();
 
-		// AND TURN IT INTO A WEATHER REPORT IN DOM
-		const cityEl = document.getElementById("city");
-		cityEl.innerText = weather_data["name"];
+			// AND TURN IT INTO A WEATHER REPORT IN DOM
+			document.getElementById("city").innerText = weather_data["name"];
+			const time = Date.now();
+			document.getElementById("time").innerText = new Date(time).toLocaleString(
+				"kk-KZ",
+				{ timeZoneName: "short" }
+			);
+			document.getElementById("weather").innerText =
+				weather_data["weather"][0]["description"];
+			document.getElementById("temp").innerText = Math.floor(
+				weather_data["main"]["temp"] - 273.15
+			);
+			document.getElementById("feels-like").innerText = Math.floor(
+				weather_data["main"]["feels_like"] - 273.15
+			);
+			document.getElementById("wind").innerText = weather_data["wind"]["speed"];
 
-		const timeEL = document.getElementById("time");
-		const time = Date.now();
-		const time_format_options = { timeZoneName: "short" };
-		timeEL.innerText = new Date(time).toLocaleString(
-			"kk-KZ",
-			time_format_options
-		);
-
-		const weatherEl = document.getElementById("weather");
-		weatherEl.innerText = weather_data["weather"][0]["description"];
-
-		const tempEl = document.getElementById("temp");
-		tempEl.innerText = Math.floor(weather_data["main"]["temp"] - 273.15);
-
-		const feelsLikeEl = document.getElementById("feels-like");
-		feelsLikeEl.innerText = Math.floor(
-			weather_data["main"]["feels_like"] - 273.15
-		);
-
-		const windEl = document.getElementById("wind");
-		windEl.innerText = weather_data["wind"]["speed"];
-
-		// WHEN ALL THE DOM IS READY THEN "PLEASE WAIT" MESSAGE DISSAPPERARS
-		// AND WEATHER REPORT IS SHOWN
-		waitEl.style.display = "none";
-		const weatherWrapperEl = document.getElementById("weather-wrapper");
-		weatherWrapperEl.style.display = "block";
+			// WHEN ALL THE DOM IS READY THEN "PLEASE WAIT" MESSAGE DISSAPPERARS
+			// AND WEATHER REPORT IS SHOWN
+			waitEl.style.display = "none";
+			const weatherReportEl = document.getElementById("ready");
+			weatherReportEl.style.display = "block";
+		} catch (error) {
+			console.error(error);
+		}
 
 		// YOU CAN LOG A WEATHER REPORT UPON BUTTON CLICK
 		const saveLogBtn = document.getElementById("save-log");

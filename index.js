@@ -37,24 +37,6 @@ app.post("/api", async (request, response) => {
 
 	data.timestamp = Date.now();
 
-	// const imageData = data["image64"].split(";base64,").pop();
-	// const imageFileName = `${data.myName} FACE ON ${new Date(
-	// 	data.timestamp
-	// )}.png`;
-
-	// fs.writeFile(
-	// 	`public/snapshots/${imageFileName}`,
-	// 	imageData,
-	// 	"base64",
-	// 	(err) => {
-	// 		if (err) throw err;
-	// 		// console.log("The file has been saved!");
-	// 	}
-	// );
-
-	// delete data["image64"];
-	// data.imageFile = imageFileName;``
-
 	database.insert(data);
 	//RESPONSE
 	//you are required to make a response, for example:
@@ -69,5 +51,6 @@ app.get("/weather/:lat-:lon", async (request, response) => {
 	const apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${weather_API_key}`;
 	const weather_response = await fetch(apiURL);
 	const weather_JSON = await weather_response.json();
+	console.log(weather_JSON);
 	response.json(weather_JSON);
 });

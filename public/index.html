@@ -7,6 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
 
+  <!-- LEAFLET.JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+  <!-- LEAFLET.JS -->
+
+
   <title>THE WEATHER HERE</title>
 </head>
 
@@ -18,13 +26,18 @@
     </nav>
   </header>
   <main id="main">
-    <h2 id="wait">Please wait a second while the weather is loading...</h2>
     <section id="weather-wrapper">
-      <h2>Weather in <span id="city"></span> at <span id="time"></span>:</h2>
-      <p>Right now it is <span id="temp"></span>℃ which feels like: <span id="feels-like"></span>℃ outside, with <span
-          id="weather"></span>. The wind is <span id="wind"></span> m/sec.</p>
-      <button id="save-log">SAVE WEATHER LOG</button>
+      <div id="wait">
+        <h2>Please wait a second while the weather is loading...</h2>
+      </div>
+      <div id="ready">
+        <h2>Weather in <span id="city"></span> at <span id="time"></span>:</h2>
+        <p>Right now it is <span id="temp"></span>℃ which feels like: <span id="feels-like"></span>℃ outside, with <span
+            id="weather"></span>. The wind is <span id="wind"></span> m/sec.</p>
+        <button id="save-log">SAVE WEATHER LOG</button>
+      </div>
     </section>
+    <div id="map"></div>
   </main>
 </body>
 

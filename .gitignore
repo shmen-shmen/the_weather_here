@@ -6,3 +6,5 @@ database.db
 /weather_API_key.js
 #DS_Store, whatever that is
 .DS_Store
+#holds api key
+.env

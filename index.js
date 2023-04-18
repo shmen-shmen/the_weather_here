@@ -1,7 +1,8 @@
 import express from "express";
 import fs from "fs";
 import Datastore from "@seald-io/nedb";
-import weather_API_key from "./weather_API_key.js";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 //listen at a port
@@ -45,9 +46,12 @@ app.post("/api", async (request, response) => {
 });
 
 //making weather request with client coordinates and sending result back to client
+
 app.get("/weather/:lat-:lon", async (request, response) => {
 	const { lat, lon } = request.params;
-	const apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${weather_API_key}&units=metric`;
+	const weatherApiKey = process.env.WEATHER_API_KEY;
+	const apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${weatherApiKey}&units=metric`;
+	console.log(apiURL);
 	const weather_response = await fetch(apiURL);
 	const weather_JSON = await weather_response.json();
 	response.json(weather_JSON);
